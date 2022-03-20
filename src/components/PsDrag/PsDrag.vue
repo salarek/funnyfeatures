@@ -6,11 +6,12 @@
     class="ps-drag"
     id="ps-drag"
   >
-    <div class="timer-container">
+    <!-- <div class="timer-container">
       <p style="border: solid; padding: 4px; background: green; color: white">
         Time:{{ time | secondsInMinutes }}
       </p>
-    </div>
+    </div> -->
+    <stoper @time="receiveTime" :running="running" />
     <div
       v-if="!play"
       @click="startGame()"
@@ -95,10 +96,14 @@
 
 <script>
 import moment from "moment";
+import Stoper from "@/components/Stoper/Stoper.vue";
 export default {
   name: "HelloWorld",
   props: {
     msg: String,
+  },
+  components: {
+    Stoper,
   },
   data() {
     return {
@@ -110,16 +115,10 @@ export default {
       gameStatusText: "Kliknij by rozpocząć",
       play: false,
       time: 0,
-      timer: null,
       running: false,
     };
   },
-  watch: {
-    running: function (newVal) {
-      if (newVal) this.startT();
-      else this.stopT();
-    },
-  },
+
   filters: {
     secondsInMinutes: function (seconds) {
       return moment("2015-01-01")
@@ -134,18 +133,10 @@ export default {
     }, 5000);
   },
   methods: {
-    stopT: function () {
-      clearInterval(this.timer);
-      if (this.restWhenStop) this.resetT();
-    },
-    startT() {
-      if (this.resetWhenStart) this.resetT();
-      this.timer = setInterval(() => {
-        this.time++;
-      }, 1000);
-    },
-    resetT() {
-      this.time = 0;
+    receiveTime(val) {
+      this.gameStatusText =
+        "KONIEC GRY<br>Kliknij by rozpocząć ponownie<br>" + val;
+      return val;
     },
     startGame() {
       this.running = true;
@@ -153,13 +144,11 @@ export default {
       this.play = true;
     },
     endGame() {
+      this.running = false;
       this.posX = 900;
       this.posY = -1100;
-      this.running = false;
-      this.gameStatusText =
-        "KONIEC GRY<br>Kliknij by rozpocząć ponownie<br>" +
-        this.$options.filters.secondsInMinutes(this.time);
-      this.time = 0;
+      this.gameStatusText = "KONIEC GRY<br>Kliknij by rozpocząć ponownie<br>";
+
       this.play = false;
     },
 
