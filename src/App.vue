@@ -1,28 +1,31 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <ps-drag />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+// import PsConnect from "./components/PsConnect.vue";
+import PsDrag from "./components/PsDrag/PsDrag.vue";
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    // PsConnect,
+    PsDrag,
+  },
+};
 </script>
 
 <style>
+body {
+  margin: 0 !important;
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  background: black;
+  position: "absolute";
+  width: 100vw;
+  height: 100vh;
+  padding: 0px;
+  margin: 0px;
 }
 </style>
