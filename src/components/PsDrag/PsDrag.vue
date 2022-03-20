@@ -12,90 +12,30 @@
       </p>
     </div> -->
     <stoper @time="receiveTime" :running="running" />
-    <div
-      v-if="!play"
-      @click="startGame()"
-      class="end-screen"
-      v-html="gameStatusText"
-    ></div>
-    <div
-      @mouseover="endGame()"
-      id="dragDiv"
-      :style="{
-        background: 'red',
-        top: posY - 240 + 'px',
-        left: posX - 240 + 'px',
-      }"
-      class="enemy"
-    >
-      <img :src="require('@/components/PsDrag/plaszczak_void.gif')" />
-    </div>
-    <div
-      @mouseover="endGame()"
-      id="dragDiv"
-      :style="{
-        background: 'red',
-        top: posY - 240 + 'px',
-        left: posX - 240 + 500 + 'px',
-      }"
-      class="enemy"
-    >
-      <img :src="require('@/components/PsDrag/belzebub_plaszczak.gif')" />
-    </div>
-    <div
-      @mouseover="endGame()"
-      id="dragDiv"
-      :style="{
-        background: 'red',
-        top: posY - 240 + 'px',
-        left: posX - 240 - 500 + 'px',
-      }"
-      class="enemy"
-    >
-      <img :src="require('@/components/PsDrag/skull_plaszczak.gif')" />
-    </div>
-
-    <div
-      @mouseover="endGame()"
-      id="dragDiv"
-      :style="{
-        background: 'red',
-        top: posY + 400 - 240 + 'px',
-        left: posX - 240 + 'px',
-      }"
-      class="enemy"
-    >
-      <img :src="require('@/components/PsDrag/plaszczak_void.gif')" />
-    </div>
-    <div
-      @mouseover="endGame()"
-      id="dragDiv"
-      :style="{
-        background: 'red',
-        top: posY + 400 - 240 + 'px',
-        left: posX - 240 + 500 + 'px',
-      }"
-      class="enemy"
-    >
-      <img :src="require('@/components/PsDrag/belzebub_plaszczak.gif')" />
-    </div>
-    <div
-      @mouseover="endGame()"
-      id="dragDiv"
-      :style="{
-        background: 'red',
-        top: posY + 400 - 240 + 'px',
-        left: posX - 240 - 500 + 'px',
-      }"
-      class="enemy"
-    >
-      <img :src="require('@/components/PsDrag/skull_plaszczak.gif')" />
+    <div v-for="pos in positions" :key="pos.index">
+      <div
+        v-if="!play"
+        @click="startGame()"
+        class="end-screen"
+        v-html="gameStatusText"
+      ></div>
+      <div
+        @mouseover="endGame()"
+        id="dragDiv"
+        :style="{
+          background: 'red',
+          top: posY + pos.y - 240 + 'px',
+          left: posX + pos.x - 240 + 'px',
+        }"
+        class="enemy"
+      >
+        <img :src="require('@/components/PsDrag/plaszczak_void.gif')" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import moment from "moment";
 import Stoper from "@/components/Stoper/Stoper.vue";
 export default {
   name: "HelloWorld",
@@ -110,26 +50,29 @@ export default {
       bcg: "#ffffff",
       posX: 900,
       posY: -1100,
-
       draw: false,
       gameStatusText: "Kliknij by rozpocząć",
       play: false,
-      time: 0,
       running: false,
+      static_positions: [
+        { x: 500, y: 0 },
+        { x: -500, y: 0 },
+        { x: -500, y: 500 },
+        { x: 0, y: 500 },
+        { x: +500, y: 500 },
+        { x: -500, y: -500 },
+        { x: 0, y: -500 },
+        { x: +500, y: -500 },
+      ],
+      positions: [{ x: 0, y: 0 }],
     };
-  },
-
-  filters: {
-    secondsInMinutes: function (seconds) {
-      return moment("2015-01-01")
-        .startOf("day")
-        .seconds(seconds)
-        .format("HH:mm:ss");
-    },
   },
   mounted() {
     setInterval(() => {
       this.bcg = this.randomColors();
+      if (this.static_positions) {
+        this.positions.push(this.static_positions.pop());
+      }
     }, 5000);
   },
   methods: {
@@ -144,6 +87,14 @@ export default {
       this.play = true;
     },
     endGame() {
+      this.positions = [{ x: 0, y: 0 }];
+      this.static_positions = [
+        { x: 500, y: 0 },
+        { x: -500, y: 0 },
+        { x: -500, y: 500 },
+        { x: 0, y: 500 },
+        { x: +500, y: 500 },
+      ];
       this.running = false;
       this.posX = 900;
       this.posY = -1100;
@@ -187,16 +138,9 @@ export default {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  cursor: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/9632/meh.png"), auto;
 }
-.timer-container {
-  position: fixed;
-  pointer-events: none;
-  left: 0px;
-  top: 0px;
-  padding: 20px;
-  z-index: 20;
-  font-size: 30px;
-}
+
 .end-screen {
   background: red;
   position: fixed;
@@ -218,5 +162,6 @@ export default {
   position: absolute;
   width: 260px;
   height: 260px;
+  transform: scale(1.2);
 }
 </style>
