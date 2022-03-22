@@ -48,6 +48,7 @@
       class="end-screen"
       v-html="gameStatusText"
     ></div>
+    <div v-if="!play" class="backToHome" @click="pushRouter('/')">Cofnij</div>
   </div>
 </template>
 
@@ -132,7 +133,9 @@ export default {
     }, 1000);
   },
   methods: {
-    init() {},
+    pushRouter(src) {
+      this.$router.push(src);
+    },
     receiveTime(val) {
       this.gameStatusText =
         "KONIEC GRY<br>Kliknij by rozpocząć ponownie<br>" + val;
@@ -218,6 +221,24 @@ export default {
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+.backToHome {
+  box-shadow: 10px -0px 15px black;
+  background: blue;
+  position: fixed;
+  color: white;
+  z-index: 23;
+  font-size: 50px;
+  width: 10%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.backToHome:hover {
+  transition: 0.5s;
+  width: 12%;
+  background: green;
 }
 .enemy {
   contain: content;

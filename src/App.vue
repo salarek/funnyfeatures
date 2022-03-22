@@ -1,31 +1,15 @@
 <template>
   <div id="app">
-    <ps-drag />
+    <router-view />
   </div>
 </template>
 
-<script>
-// import PsConnect from "./components/PsConnect.vue";
-import PsDrag from "./components/PsDrag/PsDrag.vue";
-export default {
-  name: "App",
-  components: {
-    // PsConnect,
-    PsDrag,
-  },
-};
-</script>
-
 <style>
 body {
-  margin: 0 !important;
+  margin: 0px;
+  padding: 0px;
 }
 #app {
-  background: black;
-  position: "absolute";
-  width: 100vw;
-  height: 100vh;
-  padding: 0px;
-  margin: 0px;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
 }
 </style>
