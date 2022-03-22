@@ -88,7 +88,6 @@ export default {
     };
   },
   mounted() {
-    this.init();
     let autoEnemy = document.getElementById("autoEnemy");
     setInterval(() => {
       this.bcg = this.randomColors();
