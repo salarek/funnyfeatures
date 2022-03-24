@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import PsDrag from "../components/PsDrag/PsDrag.vue";
+import Phisic from "../components/Phisic/Phisic.vue";
 
 Vue.use(VueRouter);
 
@@ -15,6 +16,11 @@ const routes = [
     path: "/dountTouchMe",
     name: "dountTouchMe",
     component: PsDrag,
+  },
+  {
+    path: "/phisic",
+    name: "phisic",
+    component: Phisic,
   },
   {
     path: "/about",
