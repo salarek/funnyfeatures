@@ -31,7 +31,7 @@ export default {
     return {
       play: false,
       startHeight: 1000,
-      gravity: 100, //jezeli metr ma 10 px to przyspieszenie ma 10 metrow/s czyli wartosc 100 - 10 metrow
+      gravity: 200, //jezeli metr ma 10 px to przyspieszenie ma 10 metrow/s czyli wartosc 100 - 10 metrow
       posY: 1000,
       meter: 10,
       gameStatusText: "dupa",
@@ -50,13 +50,13 @@ export default {
       let block = document.getElementById("block");
       console.log(block);
       setInterval(() => {
-        this.time++;
+        this.time = this.time + 0.002;
         // block.style.transition = 4 - this.time + "s";
         //this.posY = this.posY + (this.gravity * this.meter) / this.time;
 
         this.posY =
-          this.startHeight - (this.gravity * Math.pow(this.time, 2)) / 2;
-      }, 1000);
+          this.startHeight - (this.gravity * Math.pow(this.time, 20)) / 2;
+      }, 0);
     },
   },
 };
