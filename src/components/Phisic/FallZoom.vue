@@ -14,6 +14,7 @@
           />
         </div>
       </div>
+      <div style="background: black; width: 100%; height: 300px"></div>
     </div>
     <div
       :style="{
@@ -21,7 +22,26 @@
         top: this.blackHole ? '0%' : '70%',
       }"
       class="block"
-    ></div>
+    >
+      <img
+        v-if="this.posY > 0 || this.blackHole"
+        :style="{
+          height: this.blackHole ? '2000px' : '180px',
+          width: this.blackHole ? '180px' : '150%',
+        }"
+        src="./planets/fallguy.gif"
+        alt=""
+      />
+      <img
+        v-if="this.posY <= 0"
+        :style="{
+          height: this.blackHole ? '2000px' : '180px',
+          width: this.blackHole ? '180px' : '150%',
+        }"
+        src="./planets/fallguy2.png"
+        alt=""
+      />
+    </div>
   </div>
 </template>
 <script>

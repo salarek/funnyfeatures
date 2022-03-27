@@ -23,6 +23,7 @@
       <button class="custom-button" @click="setGravity(3.721)">Mars</button>
       <button class="custom-button" @click="setGravity(24)">Jowisz</button>
       <button class="custom-button" @click="setGravity(8.87)">Wenus</button>
+      <button class="custom-button" @click="setGravity(274)">Słońce</button>
       <button
         class="custom-button"
         @click="setGravity(Number.POSITIVE_INFINITY)"
@@ -39,8 +40,27 @@
       }"
       class="block"
       id="block"
-    ></div>
-    <div class="meter-ruler">
+    >
+      <img
+        v-if="this.posY > 0 || this.blackHole"
+        :style="{
+          height: this.blackHole ? '2000px' : '18px',
+          width: this.blackHole ? '18px' : '150%',
+        }"
+        src="./planets/fallguy.gif"
+        alt=""
+      />
+      <img
+        v-if="this.posY <= 0"
+        :style="{
+          height: this.blackHole ? '2000px' : '18px',
+          width: this.blackHole ? '18px' : '150%',
+        }"
+        src="./planets/fallguy2.png"
+        alt=""
+      />
+    </div>
+    <!-- <div class="meter-ruler">
       <div v-for="i in 90" :key="i.id">
         <div class="meter">{{ 90 - i }} m</div>
       </div>
@@ -49,7 +69,7 @@
       <div v-for="i in 30" :key="i.id">
         <div class="floor">{{ 30 - i }} pietro</div>
       </div>
-    </div>
+    </div> -->
     <fall-zoom
       :time="time"
       :posY="posY"
@@ -133,7 +153,7 @@ export default {
   },
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .phisic {
   position: absolute;
   width: 100vw;
@@ -148,6 +168,9 @@ export default {
   color: white;
   font-size: 2rem;
   border-width: 5px;
+}
+.custom-button:focus {
+  background: blue;
 }
 p {
   text-align: center;
@@ -203,7 +226,9 @@ p {
 .block {
   // transition: 1s linear;
   position: absolute;
-  background: red;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  padding: 20px;
   width: 8px;
   height: 20px;
 }
