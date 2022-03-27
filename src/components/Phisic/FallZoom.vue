@@ -1,10 +1,14 @@
 <template>
   <div class="fall-zoom">
-    <div :style="{ top: -8500 + posY * 10 + 'px' }" class="building">
+    <div :style="{ top: -8050 + posY * 10 + 'px' }" class="building">
       <div v-for="i in 30" :key="i.id">
-        <div class="floor">{{ 30 - i }} pietro</div>
+        <div class="floor">
+          {{ 30 - i }}
+          <img style="height: 300px" src="./planets/floor.png" alt="" />
+        </div>
       </div>
     </div>
+    <div class="block"></div>
   </div>
 </template>
 <script>
@@ -16,11 +20,10 @@ export default {
 .fall-zoom {
   contain: content;
   position: absolute;
-  top: 100px;
-  left: 50%;
-  width: 500px;
-  height: 500px;
-  background: red;
+  top: 0%;
+  right: 15%;
+  width: 900px;
+  height: 100%;
 }
 
 .floor {
@@ -35,5 +38,12 @@ export default {
   height: 9000px;
   width: 100px;
   background: blue;
+}
+.block {
+  position: absolute;
+  top: 70%;
+  width: 100px;
+  height: 180px;
+  left: 50%;
 }
 </style>

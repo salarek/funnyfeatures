@@ -1,9 +1,21 @@
 <template>
   <div class="phisic">
-    <button class="throwItemButton" @click="resetGame()">JEBNIJ!</button>
-    <div class="timer">
-      Czas Spadania: {{ Math.round(this.time * 100) / 100 }} s
+    <img
+      style="position: fixed; height: 100%"
+      :src="require('@/components/Phisic/planets/tower.jpg')"
+    />
+    <img
+      style="opacity: 0.2"
+      :src="require('@/components/Phisic/planets/earth.jpg')"
+    />
+    <div class="navigation-bar">
+      <button class="custom-button" @click="resetGame()">JEBNIJ!</button>
+      <p style="padding-left: 9%; font-size: 1.5rem; text-align: left">
+        Czas Spadania: {{ Math.round(this.time * 100) / 100 }} s
+      </p>
+      <p>Wybierz planetę</p>
     </div>
+
     <div
       :style="{ top: 900 - 20 - posY + 'px', left: '300px' }"
       class="block"
@@ -49,6 +61,9 @@ export default {
     };
   },
   methods: {
+    getImage(src) {
+      return require(src);
+    },
     pushRouter(src) {
       this.$router.push(src);
     },
@@ -86,16 +101,26 @@ export default {
   overflow: hidden;
   background-image: linear-gradient(to bottom right, yellow, green);
 }
-.throwItemButton {
-  position: fixed;
-  width: 150px;
+.custom-button {
+  width: 100%;
   height: 100px;
   background: red;
   color: white;
   font-size: 2rem;
   border-width: 5px;
+}
+p {
+  text-align: center;
+  color: white;
+  font-size: 2rem;
+}
+.navigation-bar {
+  position: fixed;
   top: 0px;
   right: 0px;
+  width: 15%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
 }
 .timer {
   position: fixed;
@@ -122,16 +147,17 @@ export default {
 }
 .meter {
   color: white;
-  background: blue;
+  background: rgba(0, 0, 0, 0.8);
   font-size: 0.7rem;
-  width: 100px;
+  width: 50px;
   height: 10px;
 }
 .floor {
   color: white;
-  background: blue;
-  font-size: 1.2rem;
-  width: 100px;
+  background: rgba(0, 0, 0, 0.8);
+  font-size: 1rem;
+  text-align: center;
+  width: 80px;
   height: 30px;
 }
 .block {
