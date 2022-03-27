@@ -1,9 +1,7 @@
 <template>
   <div class="fall-zoom">
-    <div
-      :style="{ top: -8050 + posY * 10 + 'px', width: '100%' }"
-      class="building"
-    >
+    <div :style="{ top: setHeight, width: '100%' }" class="building">
+      <div style="background: black; width: 100%; height: 20px"></div>
       <div style="width: 100%" v-for="i in 30" :key="i.id">
         <div class="floor">
           <div style="position: absolute; padding: 10px; background: black">
@@ -17,12 +15,27 @@
         </div>
       </div>
     </div>
-    <div :style="{ height: heightBlackHole + '%' }" class="block"></div>
+    <div
+      :style="{
+        height: heightBlackHole + '%',
+        top: this.blackHole ? '0%' : '70%',
+      }"
+      class="block"
+    ></div>
   </div>
 </template>
 <script>
 export default {
-  props: ["time", "posY", "heightBlackHole"],
+  props: ["time", "posY", "heightBlackHole", "blackHole"],
+  computed: {
+    setHeight() {
+      if (this.blackHole) {
+        return 0 + "px";
+      } else {
+        return -8050 + this.posY * 10 + "px";
+      }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -33,6 +46,7 @@ export default {
   right: 15%;
   width: 50%;
   height: 100%;
+  background-image: linear-gradient(rgb(0, 40, 219), rgb(2, 225, 255));
 }
 
 .floor {

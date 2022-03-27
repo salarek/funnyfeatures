@@ -10,7 +10,8 @@
     />
     <div class="navigation-bar">
       <p style="padding-left: 9%; font-size: 1.5rem; text-align: left">
-        Czas Spadania: {{ Math.round(this.time * 100) / 100 }} s
+        Czas Spadania:
+        {{ this.blackHole ? 0 : Math.round(this.time * 100) / 100 }} s
       </p>
       <p style="padding-left: 9%; font-size: 1.5rem; text-align: left">
         Prędkość: {{ Math.round(this.gravity * this.time) }} m/s
@@ -49,7 +50,12 @@
         <div class="floor">{{ 30 - i }} pietro</div>
       </div>
     </div>
-    <fall-zoom :time="time" :posY="posY" :heightBlackHole="heightBlackHole" />
+    <fall-zoom
+      :time="time"
+      :posY="posY"
+      :heightBlackHole="heightBlackHole"
+      :blackHole="blackHole"
+    />
     <div
       v-if="!play"
       @click="startGame()"
