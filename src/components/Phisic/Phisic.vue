@@ -13,6 +13,9 @@
       <p style="padding-left: 9%; font-size: 1.5rem; text-align: left">
         Czas Spadania: {{ Math.round(this.time * 100) / 100 }} s
       </p>
+      <p style="padding-left: 9%; font-size: 1.5rem; text-align: left">
+        Prędkość: {{ Math.round(this.gravity * this.time) }} m/s
+      </p>
       <p>Wybierz planetę</p>
     </div>
 
@@ -134,13 +137,12 @@ p {
 .meter-ruler {
   position: absolute;
   bottom: 0px;
-
   width: 50px;
   height: 100%;
 }
 .floor-ruler {
   position: absolute;
-  left: 100px;
+  left: 50px;
   bottom: 0px;
   width: 50px;
   height: 100%;
@@ -151,6 +153,7 @@ p {
   font-size: 0.7rem;
   width: 50px;
   height: 10px;
+  text-align: center;
 }
 .floor {
   color: white;

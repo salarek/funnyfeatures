@@ -1,10 +1,19 @@
 <template>
   <div class="fall-zoom">
-    <div :style="{ top: -8050 + posY * 10 + 'px' }" class="building">
-      <div v-for="i in 30" :key="i.id">
+    <div
+      :style="{ top: -8050 + posY * 10 + 'px', width: '100%' }"
+      class="building"
+    >
+      <div style="width: 100%" v-for="i in 30" :key="i.id">
         <div class="floor">
-          {{ 30 - i }}
-          <img style="height: 300px" src="./planets/floor.png" alt="" />
+          <div style="position: absolute; padding: 10px; background: black">
+            {{ 30 - i }}
+          </div>
+          <img
+            style="height: 300px; width: 100%"
+            src="./planets/floor.png"
+            alt=""
+          />
         </div>
       </div>
     </div>
@@ -22,7 +31,7 @@ export default {
   position: absolute;
   top: 0%;
   right: 15%;
-  width: 900px;
+  width: 50%;
   height: 100%;
 }
 
@@ -30,7 +39,7 @@ export default {
   color: white;
   background: blue;
   font-size: 1.2rem;
-  width: 100px;
+  width: 100%;
   height: 300px;
 }
 .building {
