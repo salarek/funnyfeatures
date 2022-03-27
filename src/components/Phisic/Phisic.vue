@@ -4,7 +4,7 @@
       JEBNIJ!
     </button>
     <div
-      :style="{ bottom: posY + 'px', left: '300px' }"
+      :style="{ top: 900 - 20 - posY + 'px', left: '300px' }"
       class="block"
       id="block"
     ></div>
@@ -34,9 +34,9 @@ export default {
   data() {
     return {
       play: false,
-      startHeight: 90 * meter,
-      gravity: 272 * meter, //jezeli metr ma 10 px to przyspieszenie ma 10 metrow/s czyli wartosc 100 - 10 metrow
-      posY: 90 * meter,
+      startHeight: (90 - 2) * meter,
+      gravity: 9.81 * meter, //jezeli metr ma 10 px to przyspieszenie ma 10 metrow/s czyli wartosc 100 - 10 metrow
+      posY: (90 - 2) * meter,
       gameStatusText: "dupa",
       time: 0.0,
     };
@@ -50,18 +50,22 @@ export default {
       this.gameLoop();
     },
     resetGame() {
-      this.startHeight = 90 * meter;
+      this.startHeight = (90 - 2) * meter;
       this.time = 0.01;
+      this.posY = (90 - 2) * meter;
     },
     gameLoop() {
       let block = document.getElementById("block");
       console.log(block);
       setInterval(() => {
-        this.time = this.time + 0.01;
-        // block.style.transition = 4 - this.time + "s";
-        //this.posY = this.posY + (this.gravity * this.meter) / this.time;
-        this.posY =
-          this.startHeight - (this.gravity * Math.pow(this.time, 2)) / 2;
+        if (this.posY > 0) {
+          console.log("CZAS:", this.time + "sekund");
+          this.time = this.time + 0.01;
+          // block.style.transition = 4 - this.time + "s";
+          //this.posY = this.posY + (this.gravity * this.meter) / this.time;
+          this.posY =
+            this.startHeight - (this.gravity * Math.pow(this.time, 2)) / 2;
+        }
       }, 10);
     },
   },
@@ -110,7 +114,7 @@ export default {
   position: absolute;
   background: red;
   width: 8px;
-  height: 18px;
+  height: 20px;
 }
 .end-screen {
   background: red;
