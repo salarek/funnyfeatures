@@ -19,7 +19,7 @@
         <div class="floor">{{ 30 - i }} pietro</div>
       </div>
     </div>
-
+    <fall-zoom :time="time" :posY="posY" />
     <div
       v-if="!play"
       @click="startGame()"
@@ -29,16 +29,22 @@
     <div v-if="!play" class="backToHome" @click="pushRouter('/')">Cofnij</div>
   </div>
 </template>
+
 <script>
+import FallZoom from "@/components/Phisic/FallZoom.vue";
 const meter = 10;
 export default {
+  components: {
+    FallZoom,
+  },
   data() {
     return {
       play: false,
       startHeight: (90 - 2) * meter,
       gravity: 9.81 * meter, //jezeli metr ma 10 px to przyspieszenie ma 10 metrow/s czyli wartosc 100 - 10 metrow
       posY: (90 - 2) * meter,
-      gameStatusText: "dupa",
+      gameStatusText:
+        "Witaj w symulacji upadku :) Przetestuj z jaką prędkością Mateusz Błaszczyk rozwali sobie ryja na różnych planetach",
       time: 0.0,
     };
   },
@@ -140,9 +146,9 @@ export default {
   position: fixed;
   z-index: 20;
   font-size: 70px;
-  left: 0px;
+  left: 10%;
   top: 0px;
-  width: 100%;
+  width: 90%;
   height: 100%;
   display: flex;
   justify-content: center;
