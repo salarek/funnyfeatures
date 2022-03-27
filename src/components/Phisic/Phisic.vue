@@ -9,18 +9,33 @@
       :src="require('@/components/Phisic/planets/earth.jpg')"
     />
     <div class="navigation-bar">
-      <button class="custom-button" @click="resetGame()">JEBNIJ!</button>
       <p style="padding-left: 9%; font-size: 1.5rem; text-align: left">
         Czas Spadania: {{ Math.round(this.time * 100) / 100 }} s
       </p>
       <p style="padding-left: 9%; font-size: 1.5rem; text-align: left">
         Prędkość: {{ Math.round(this.gravity * this.time) }} m/s
       </p>
+      <hr />
       <p>Wybierz planetę</p>
+      <button class="custom-button" @click="setGravity(9.81)">Ziemia</button>
+      <button class="custom-button" @click="setGravity(1.62)">Księżyc</button>
+      <button class="custom-button" @click="setGravity(3.721)">Mars</button>
+      <button class="custom-button" @click="setGravity(24)">Jowisz</button>
+      <button class="custom-button" @click="setGravity(8.87)">Wenus</button>
+      <button
+        class="custom-button"
+        @click="setGravity(Number.POSITIVE_INFINITY)"
+      >
+        Czarna dziura
+      </button>
     </div>
 
     <div
-      :style="{ top: 900 - 20 - posY + 'px', left: '300px' }"
+      :style="{
+        height: heightBlackHole + 'px',
+        top: 900 - 20 - posY + 'px',
+        left: '300px',
+      }"
       class="block"
       id="block"
     ></div>
@@ -34,7 +49,7 @@
         <div class="floor">{{ 30 - i }} pietro</div>
       </div>
     </div>
-    <fall-zoom :time="time" :posY="posY" />
+    <fall-zoom :time="time" :posY="posY" :heightBlackHole="heightBlackHole" />
     <div
       v-if="!play"
       @click="startGame()"
@@ -61,11 +76,28 @@ export default {
       gameStatusText:
         "Witaj w symulacji upadku :) Przetestuj z jaką prędkością Mateusz Błaszczyk rozwali sobie ryja na różnych planetach",
       time: 0.0,
+      blackHole: false,
     };
   },
+  computed: {
+    heightBlackHole() {
+      if (this.blackHole) {
+        return 1000;
+      } else {
+        return 20;
+      }
+    },
+  },
   methods: {
-    getImage(src) {
-      return require(src);
+    setGravity(val) {
+      if (val == Number.POSITIVE_INFINITY) {
+        this.blackHole = true;
+      } else {
+        this.blackHole = false;
+      }
+
+      this.resetGame();
+      this.gravity = val * meter;
     },
     pushRouter(src) {
       this.$router.push(src);
@@ -98,7 +130,6 @@ export default {
 <style lang="scss">
 .phisic {
   position: absolute;
-  transition: 3s;
   width: 100vw;
   height: 100vh;
   overflow: hidden;

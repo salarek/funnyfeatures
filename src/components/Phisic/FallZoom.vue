@@ -17,12 +17,12 @@
         </div>
       </div>
     </div>
-    <div class="block"></div>
+    <div :style="{ height: heightBlackHole + '%' }" class="block"></div>
   </div>
 </template>
 <script>
 export default {
-  props: ["time", "posY"],
+  props: ["time", "posY", "heightBlackHole"],
 };
 </script>
 <style lang="scss" scoped>
