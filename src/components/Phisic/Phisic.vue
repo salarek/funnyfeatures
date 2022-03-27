@@ -1,21 +1,24 @@
 <template>
   <div class="phisic">
+    <button style="position: fixed; top: 0px; left: 700px" @click="resetGame()">
+      JEBNIJ!
+    </button>
     <div
       :style="{ bottom: posY + 'px', left: '300px' }"
       class="block"
       id="block"
     ></div>
     <div class="ruler">
-      <div class="meter">9 m</div>
-      <div class="meter">8 m</div>
-      <div class="meter">7 m</div>
-      <div class="meter">6 m</div>
-      <div class="meter">5 m</div>
-      <div class="meter">5 m</div>
-      <div class="meter">4 m</div>
-      <div class="meter">3 m</div>
-      <div class="meter">1 m</div>
+      <div v-for="i in 90" :key="i.id">
+        <div class="meter">{{ 90 - i }} m</div>
+      </div>
     </div>
+    <div class="ruler2">
+      <div v-for="i in 30" :key="i.id">
+        <div class="pietro">{{ 30 - i }} pietro</div>
+      </div>
+    </div>
+
     <div
       v-if="!play"
       @click="startGame()"
@@ -26,16 +29,16 @@
   </div>
 </template>
 <script>
+const meter = 10;
 export default {
   data() {
     return {
       play: false,
-      startHeight: 1000,
-      gravity: 200, //jezeli metr ma 10 px to przyspieszenie ma 10 metrow/s czyli wartosc 100 - 10 metrow
-      posY: 1000,
-      meter: 10,
+      startHeight: 90 * meter,
+      gravity: 272 * meter, //jezeli metr ma 10 px to przyspieszenie ma 10 metrow/s czyli wartosc 100 - 10 metrow
+      posY: 90 * meter,
       gameStatusText: "dupa",
-      time: 1,
+      time: 0.0,
     };
   },
   methods: {
@@ -46,17 +49,20 @@ export default {
       this.play = true;
       this.gameLoop();
     },
+    resetGame() {
+      this.startHeight = 90 * meter;
+      this.time = 0.01;
+    },
     gameLoop() {
       let block = document.getElementById("block");
       console.log(block);
       setInterval(() => {
-        this.time = this.time + 0.002;
+        this.time = this.time + 0.01;
         // block.style.transition = 4 - this.time + "s";
         //this.posY = this.posY + (this.gravity * this.meter) / this.time;
-
         this.posY =
-          this.startHeight - (this.gravity * Math.pow(this.time, 20)) / 2;
-      }, 0);
+          this.startHeight - (this.gravity * Math.pow(this.time, 2)) / 2;
+      }, 10);
     },
   },
 };
@@ -73,21 +79,38 @@ export default {
 .ruler {
   position: absolute;
   bottom: 0px;
-  background: red;
+
+  width: 50px;
+  height: 100%;
+}
+.ruler2 {
+  position: absolute;
+  left: 100px;
+  bottom: 0px;
+
   width: 50px;
   height: 100%;
 }
 .meter {
-  border-top: solid;
+  color: white;
   background: blue;
-  height: 100px;
+  font-size: 0.7rem;
+  width: 100px;
+  height: 10px;
+}
+.pietro {
+  color: white;
+  background: blue;
+  font-size: 0.7rem;
+  width: 100px;
+  height: 30px;
 }
 .block {
-  // transition: 1s;
+  // transition: 1s linear;
   position: absolute;
   background: red;
-  width: 80px;
-  height: 180px;
+  width: 8px;
+  height: 18px;
 }
 .end-screen {
   background: red;
