@@ -1,21 +1,22 @@
 <template>
   <div class="phisic">
-    <button style="position: fixed; top: 0px; left: 700px" @click="resetGame()">
-      JEBNIJ!
-    </button>
+    <button class="throwItemButton" @click="resetGame()">JEBNIJ!</button>
+    <div class="timer">
+      Czas Spadania: {{ Math.round(this.time * 100) / 100 }} s
+    </div>
     <div
       :style="{ top: 900 - 20 - posY + 'px', left: '300px' }"
       class="block"
       id="block"
     ></div>
-    <div class="ruler">
+    <div class="meter-ruler">
       <div v-for="i in 90" :key="i.id">
         <div class="meter">{{ 90 - i }} m</div>
       </div>
     </div>
-    <div class="ruler2">
+    <div class="floor-ruler">
       <div v-for="i in 30" :key="i.id">
-        <div class="pietro">{{ 30 - i }} pietro</div>
+        <div class="floor">{{ 30 - i }} pietro</div>
       </div>
     </div>
 
@@ -59,7 +60,6 @@ export default {
       console.log(block);
       setInterval(() => {
         if (this.posY > 0) {
-          console.log("CZAS:", this.time + "sekund");
           this.time = this.time + 0.01;
           // block.style.transition = 4 - this.time + "s";
           //this.posY = this.posY + (this.gravity * this.meter) / this.time;
@@ -80,18 +80,37 @@ export default {
   overflow: hidden;
   background-image: linear-gradient(to bottom right, yellow, green);
 }
-.ruler {
+.throwItemButton {
+  position: fixed;
+  width: 150px;
+  height: 100px;
+  background: red;
+  color: white;
+  font-size: 2rem;
+  border-width: 5px;
+  top: 0px;
+  right: 0px;
+}
+.timer {
+  position: fixed;
+  pointer-events: none;
+  left: 900px;
+  top: 0px;
+  padding: 20px;
+  z-index: 20;
+  font-size: 30px;
+}
+.meter-ruler {
   position: absolute;
   bottom: 0px;
 
   width: 50px;
   height: 100%;
 }
-.ruler2 {
+.floor-ruler {
   position: absolute;
   left: 100px;
   bottom: 0px;
-
   width: 50px;
   height: 100%;
 }
@@ -102,10 +121,10 @@ export default {
   width: 100px;
   height: 10px;
 }
-.pietro {
+.floor {
   color: white;
   background: blue;
-  font-size: 0.7rem;
+  font-size: 1.2rem;
   width: 100px;
   height: 30px;
 }
