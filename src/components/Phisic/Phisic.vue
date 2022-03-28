@@ -132,9 +132,9 @@ export default {
     },
     startGame() {
       this.play = true;
-      this.gameLoop();
     },
     resetGame() {
+      this.gameLoop();
       this.startHeight = (90 - 2) * meter;
       this.time = 0.01;
       this.posY = (90 - 2) * meter;
@@ -161,7 +161,7 @@ export default {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background-image: linear-gradient(to bottom right, yellow, green);
+  background: red;
 }
 .custom-button {
   width: 100%;
@@ -172,7 +172,7 @@ export default {
   border-width: 5px;
 }
 .custom-button:focus {
-  background: blue;
+  background: rgba(0, 0, 0, 0.1);
 }
 p {
   text-align: center;
