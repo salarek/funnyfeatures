@@ -132,9 +132,9 @@ export default {
     },
     startGame() {
       this.play = true;
+      this.gameLoop();
     },
     resetGame() {
-      this.gameLoop();
       this.startHeight = (90 - 2) * meter;
       this.time = 0.01;
       this.posY = (90 - 2) * meter;
