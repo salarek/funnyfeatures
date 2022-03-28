@@ -14,7 +14,7 @@
         {{ this.blackHole ? 0 : Math.round(this.time * 100) / 100 }} s
       </p>
       <p style="padding-left: 9%; font-size: 1.5rem; text-align: left">
-        Prędkość: {{ Math.round(this.gravity * this.time) }} m/s
+        Prędkość: {{ Math.round((this.gravity / 10) * this.time * 3.6) }} km/h
       </p>
       <hr />
       <p>Wybierz planetę</p>

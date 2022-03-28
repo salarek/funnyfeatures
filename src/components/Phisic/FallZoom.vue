@@ -8,8 +8,15 @@
             {{ 30 - i }}
           </div>
           <img
+            v-if="i < 30"
             style="height: 300px; width: 100%"
             src="./planets/floor.png"
+            alt=""
+          />
+          <img
+            v-else
+            style="height: 300px; width: 100%"
+            src="./planets/floor0.png"
             alt=""
           />
         </div>
