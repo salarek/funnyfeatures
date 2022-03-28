@@ -100,7 +100,7 @@ export default {
       play: false,
       startHeight: (90 - 2) * meter,
       gravity: 9.81 * meter, //jezeli metr ma 10 px to przyspieszenie ma 10 metrow/s czyli wartosc 100 - 10 metrow
-      posY: (90 - 2) * meter,
+      posY: 0 * meter,
       gameStatusText:
         "Witaj w symulacji upadku :) Przetestuj z jaką prędkością Mateusz Błaszczyk rozwali sobie ryja na różnych planetach",
       time: 0.0,
