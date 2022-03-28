@@ -22,7 +22,9 @@
       <button class="custom-button" @click="setGravity(1.62)">Księżyc</button>
       <button class="custom-button" @click="setGravity(3.721)">Mars</button>
       <button class="custom-button" @click="setGravity(24)">Jowisz</button>
-      <button class="custom-button" @click="setGravity(8.87)">Wenus</button>
+      <button class="custom-button" @click="setGravity(2999)">
+        Twoja Stara
+      </button>
       <button class="custom-button" @click="setGravity(274)">Słońce</button>
       <button
         class="custom-button"
