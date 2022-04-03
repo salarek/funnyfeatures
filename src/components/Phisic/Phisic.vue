@@ -9,7 +9,7 @@
       :src="require('@/components/Phisic/planets/earth.jpg')"
     />
     <div class="navigation-bar">
-      <p style="padding-left: 9%; font-size: 1.5rem; text-align: left">
+      <p style="padding-left: 9%; font-size: 1.3rem; text-align: left">
         Czas Spadania:
         {{ this.blackHole ? 0 : Math.round(this.time * 100) / 100 }} s
       </p>
@@ -164,6 +164,7 @@ export default {
   background: red;
 }
 .custom-button {
+  font-family: "Galindo", sans-serif;
   width: 100%;
   height: 100px;
   background: red;

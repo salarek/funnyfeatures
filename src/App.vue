@@ -5,11 +5,12 @@
 </template>
 
 <style>
+@import url("http://fonts.googleapis.com/css?family=Galindo&subset=latin,latin-ext");
 body {
   margin: 0px;
   padding: 0px;
 }
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Galindo", sans-serif;
 }
 </style>
