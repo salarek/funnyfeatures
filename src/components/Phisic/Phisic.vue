@@ -32,6 +32,9 @@
       >
         Czarna dziura
       </button>
+      <button class="custom-button" @click="invertGravity()">
+        Odwróć grawitacje
+      </button>
     </div>
 
     <div
@@ -105,6 +108,8 @@ export default {
         "Witaj w symulacji upadku :) Przetestuj z jaką prędkością Mateusz Błaszczyk rozwali sobie ryja na różnych planetach",
       time: 0.0,
       blackHole: false,
+      directionGravity: "down",
+      startInvertHeight: 0,
     };
   },
   computed: {
@@ -117,6 +122,17 @@ export default {
     },
   },
   methods: {
+    invertGravity() {
+      if (this.directionGravity == "down") {
+        this.startInvertHeight =
+          this.posY - (this.gravity * Math.pow(this.time, 2)) / 2;
+        this.directionGravity = "up";
+      } else {
+        this.startHeight =
+          this.posY + (this.gravity * Math.pow(this.time, 2)) / 2;
+        this.directionGravity = "down";
+      }
+    },
     setGravity(val) {
       if (val == Number.POSITIVE_INFINITY) {
         this.blackHole = true;
@@ -135,6 +151,7 @@ export default {
       this.gameLoop();
     },
     resetGame() {
+      this.directionGravity = "down";
       this.startHeight = (90 - 2) * meter;
       this.time = 0.01;
       this.posY = (90 - 2) * meter;
@@ -143,12 +160,18 @@ export default {
       let block = document.getElementById("block");
       console.log(block);
       setInterval(() => {
-        if (this.posY > 0) {
+        if (this.posY > 0 && this.posY < 900) {
           this.time = this.time + 0.01;
           // block.style.transition = 4 - this.time + "s";
           //this.posY = this.posY + (this.gravity * this.meter) / this.time;
-          this.posY =
-            this.startHeight - (this.gravity * Math.pow(this.time, 2)) / 2;
+          if (this.directionGravity == "down") {
+            this.posY =
+              this.startHeight - (this.gravity * Math.pow(this.time, 2)) / 2;
+          } else {
+            this.posY =
+              this.startInvertHeight +
+              (this.gravity * Math.pow(this.time, 2)) / 2;
+          }
         }
       }, 10);
     },
@@ -166,7 +189,7 @@ export default {
 .custom-button {
   font-family: "Galindo", sans-serif;
   width: 100%;
-  height: 100px;
+  height: 80px;
   background: red;
   color: white;
   font-size: 2rem;

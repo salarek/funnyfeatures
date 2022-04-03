@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import PsDrag from "../components/PsDrag/PsDrag.vue";
 import Phisic from "../components/Phisic/Phisic.vue";
+import Rekurwencja from "../components/Rekurwencja/Rekurwencja.vue";
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,11 @@ const routes = [
     path: "/phisic",
     name: "phisic",
     component: Phisic,
+  },
+  {
+    path: "/rekurwencja",
+    name: "rekurwencja",
+    component: Rekurwencja,
   },
   {
     path: "/about",
