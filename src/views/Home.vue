@@ -108,7 +108,7 @@
       >
         <path
           id="Zaznaczenie"
-          @click="pushRouter('rekurwencja')"
+          @click="pushRouter('speedsimulator')"
           fill="green"
           stroke="white"
           stroke-width="9"

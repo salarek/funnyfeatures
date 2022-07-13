@@ -3,7 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import PsDrag from "../components/PsDrag/PsDrag.vue";
 import Phisic from "../components/Phisic/Phisic.vue";
-import Rekurwencja from "../components/Rekurwencja/Rekurwencja.vue";
+import SpeedSimulator from "../components/SpeedSimulator/SpeedSimulator.vue";
 
 Vue.use(VueRouter);
 
@@ -24,9 +24,9 @@ const routes = [
     component: Phisic,
   },
   {
-    path: "/rekurwencja",
-    name: "rekurwencja",
-    component: Rekurwencja,
+    path: "/speedsimulator",
+    name: "speedsimulator",
+    component: SpeedSimulator,
   },
   {
     path: "/about",
