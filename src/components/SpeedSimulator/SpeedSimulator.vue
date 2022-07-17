@@ -28,8 +28,10 @@
     </div>
     <span class="text">{{ getDistance(this.velocity, this.speed) }} km</span>
     <span class="text">{{ getVelocity(this.distance, this.speed) }} m/s</span>
+
     <div class="btn" @click="startGame">Start</div>
     <div class="btn" @click="stopGame">Stop</div>
+
     <welcome-screen
       :welcomeScreenStatus="welcomeScreenStatus"
       @setWelcomeStatus="setWelcomeStatus"
@@ -48,13 +50,13 @@ export default {
   data() {
     return {
       distance1: 150000000,
-      speed1: 0.2,
+      speed1: 0.02,
       distance: 384400,
       velocity: 295988000,
       velocity1: 300000000,
       velocity2: 300000000,
-      speed2: 0.00000000315,
-      speed: 77,
+      speed2: 0.000000000315,
+      speed: 7.7,
       gameLoopInterval: 0,
       direction2: "right",
       direction1: "right",
@@ -74,7 +76,7 @@ export default {
       if (newValue >= 100) {
         this.direction = "left";
       }
-      if (newValue <= 0) {
+      if (newValue <= 7) {
         this.direction = "right";
       }
     },
@@ -97,10 +99,10 @@ export default {
   },
   methods: {
     getDistance(velocity, speed) {
-      return (velocity / (speed * 100)) * 10;
+      return (velocity / (speed * 100)) * 1;
     },
     getVelocity(distance, speed) {
-      return distance * (speed / 100) * 1000;
+      return distance * (speed / 100) * 10000;
     },
     setWelcomeStatus(val) {
       this.welcomeScreenStatus = val;
@@ -136,7 +138,7 @@ export default {
           if (this.direction == "left") {
             this.posX = this.posX - this.speed;
           }
-        }, 1000);
+        }, 100);
       }
     },
     resetGame() {},
@@ -161,7 +163,7 @@ export default {
     cursor: pointer;
     font-size: 1.5em;
     text-align: center;
-    margin: 2%;
+    margin: 0.2%;
     width: 10%;
     height: 5%;
     background: white;
@@ -179,7 +181,7 @@ export default {
     background: red;
     height: 10%;
     .item {
-      transition: 1s linear;
+      transition: 0.1s linear;
       position: absolute;
       height: 100%;
       width: 1%;
