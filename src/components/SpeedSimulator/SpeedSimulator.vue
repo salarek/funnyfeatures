@@ -6,10 +6,20 @@
         class="item"
       ></div>
     </div>
+    <span class="text">{{ this.distance3 }} km</span>
     <span class="text"
-      >{{ getDistance(this.velocity3, this.speed3 / 10) }} km</span
+      >{{ this.velocity3 }} km/h lub
+      {{ Math.round((this.velocity3 / 1080000000) * 1000000) / 1000000 }}
+      prędkości światła</span
     >
-    <span class="text">{{ this.velocity3 }} m/s</span>
+    <span class="text"
+      >czas:
+      {{ Math.round((this.distance3 / this.velocity3 / 8760) * 100) / 100 }}y
+      {{ Math.round((this.distance3 / this.velocity3 / 24) * 100) / 100 }} d
+      {{ Math.round((this.distance3 / this.velocity3) * 100) / 100 }} h
+      {{ Math.round((this.distance3 / this.velocity3) * 3600 * 100) / 100 }}
+      s</span
+    >
     <div class="road">
       <div
         :style="{ position: 'absolute', left: posX2 + '%' }"
@@ -20,7 +30,9 @@
       >{{ getDistance(this.velocity2, this.speed2) }} km lub 1 rok
       świetlny</span
     >
-    <span class="text">{{ this.velocity2 }} m/s</span>
+    <span class="text"
+      >{{ this.velocity2 }} m/s lub 1080000000 km/h - prędkość światła</span
+    >
     <div class="road">
       <div
         :style="{ position: 'absolute', left: posX1 + '%' }"
@@ -28,7 +40,10 @@
       ></div>
     </div>
     <span class="text">{{ getDistance(this.velocity1, this.speed1) }} km</span>
-    <span class="text">{{ getVelocity(this.distance1, this.speed1) }} m/s</span>
+    <span class="text"
+      >{{ getVelocity(this.distance1, this.speed1) }} m/s lub 1080000000 km/h -
+      prędkość światła</span
+    >
     <div class="road">
       <div
         id="dupa"
@@ -37,13 +52,17 @@
       ></div>
     </div>
     <span class="text">{{ getDistance(this.velocity, this.speed) }} km</span>
-    <span class="text">{{ getVelocity(this.distance, this.speed) }} m/s</span>
+    <span class="text"
+      >{{ getVelocity(this.distance, this.speed) }} m/s lub 1080000000 km/h -
+      prędkość światła</span
+    >
 
     <div class="btn" @click="startGame">Start</div>
     <div class="btn" @click="stopGame">Stop</div>
     <div>
-      Prędkość:<input v-model="velocity3" type="text" />Procent przebytego
-      dystansu w 1 sekunde:<input v-model="speed3" type="text" />
+      Prędkość:<input v-model="velocity3" type="text" />
+      <!-- Procent przebytego dystansu w 1 sekunde:<input v-model="speed3" type="text" />  -->
+      Dystans:<input v-model="distance3" type="text" />
     </div>
 
     <welcome-screen
@@ -63,6 +82,7 @@ export default {
   },
   data() {
     return {
+      distance3: 0,
       distance1: 150000000,
       speed1: 0.02,
       distance: 384400,
@@ -146,10 +166,18 @@ export default {
       if (this.play) {
         this.gameLoopInterval = setInterval(() => {
           if (this.direction3 == "right") {
-            this.posX3 = this.posX3 + parseFloat(this.speed3 / 10);
+            this.posX3 =
+              this.posX3 +
+              (parseFloat(this.velocity3 * 0.36) /
+                (parseFloat(this.distance3) * 10000)) *
+                100;
           }
           if (this.direction3 == "left") {
-            this.posX3 = this.posX3 - parseFloat(this.speed3 / 10);
+            this.posX3 =
+              this.posX3 -
+              (parseFloat(this.velocity3 * 0.36) /
+                (parseFloat(this.distance3) * 10000)) *
+                100;
           }
           if (this.direction2 == "right") {
             this.posX2 = this.posX2 + this.speed2;
