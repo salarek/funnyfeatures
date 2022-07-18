@@ -2,6 +2,16 @@
   <div class="speed-simulator">
     <div class="road">
       <div
+        :style="{ position: 'absolute', left: posX3 + '%' }"
+        class="item"
+      ></div>
+    </div>
+    <span class="text"
+      >{{ getDistance(this.velocity3, this.speed3 / 10) }} km</span
+    >
+    <span class="text">{{ this.velocity3 }} m/s</span>
+    <div class="road">
+      <div
         :style="{ position: 'absolute', left: posX2 + '%' }"
         class="item"
       ></div>
@@ -31,6 +41,10 @@
 
     <div class="btn" @click="startGame">Start</div>
     <div class="btn" @click="stopGame">Stop</div>
+    <div>
+      Prędkość:<input v-model="velocity3" type="text" />Procent przebytego
+      dystansu w 1 sekunde:<input v-model="speed3" type="text" />
+    </div>
 
     <welcome-screen
       :welcomeScreenStatus="welcomeScreenStatus"
@@ -55,9 +69,12 @@ export default {
       velocity: 295988000,
       velocity1: 300000000,
       velocity2: 300000000,
+      velocity3: 0,
       speed2: 0.000000000315,
+      speed3: 0,
       speed: 7.7,
       gameLoopInterval: 0,
+      direction3: "right",
       direction2: "right",
       direction1: "right",
       direction: "right",
@@ -65,6 +82,7 @@ export default {
       posX: 0,
       posX1: 0,
       posX2: 0,
+      posX3: 0,
       timer: 0,
       welcomeScreenStatus: false,
       gameStatusText: "Przetestuj prędkości i oddddległości :)",
@@ -96,10 +114,18 @@ export default {
         this.direction2 = "right";
       }
     },
+    posX3(newValue) {
+      if (newValue >= 100) {
+        this.direction3 = "left";
+      }
+      if (newValue <= 0) {
+        this.direction3 = "right";
+      }
+    },
   },
   methods: {
     getDistance(velocity, speed) {
-      return (velocity / (speed * 100)) * 1;
+      return (velocity / (parseFloat(speed) * 100)) * 1;
     },
     getVelocity(distance, speed) {
       return distance * (speed / 100) * 10000;
@@ -119,7 +145,12 @@ export default {
     gameLoop() {
       if (this.play) {
         this.gameLoopInterval = setInterval(() => {
-          console.log("pizdy");
+          if (this.direction3 == "right") {
+            this.posX3 = this.posX3 + parseFloat(this.speed3 / 10);
+          }
+          if (this.direction3 == "left") {
+            this.posX3 = this.posX3 - parseFloat(this.speed3 / 10);
+          }
           if (this.direction2 == "right") {
             this.posX2 = this.posX2 + this.speed2;
           }
