@@ -89,11 +89,10 @@ export default {
           if (this.play == true) {
             this.points++;
           }
-          (this.number1 = this.getRandomInt()),
-            (this.number2 = this.getRandomInt()),
-            setTimeout(() => {
-              this.inputValue = "";
-            }, 100);
+          this.setNumbers();
+          setTimeout(() => {
+            this.inputValue = "";
+          }, 100);
         }
       }
       if (this.mode == "odd") {
@@ -101,11 +100,10 @@ export default {
           if (this.play == true) {
             this.points++;
           }
-          (this.number1 = this.getRandomInt()),
-            (this.number2 = this.getRandomInt()),
-            setTimeout(() => {
-              this.inputValue = "";
-            }, 100);
+          this.setNumbers();
+          setTimeout(() => {
+            this.inputValue = "";
+          }, 100);
         }
       }
     },
@@ -123,14 +121,12 @@ export default {
     },
   },
   created() {
-    this.number1 = this.getRandomInt();
-    this.number2 = this.getRandomInt();
+    this.setNumbers();
   },
   methods: {
     setLevel(val) {
       this.level = val;
-      this.number1 = this.getRandomInt();
-      this.number2 = this.getRandomInt();
+      this.setNumbers();
     },
     getRandomInt() {
       console.log("LEVEL", this.level);
@@ -138,12 +134,20 @@ export default {
       let max = Math.floor(this.level);
       return Math.floor(Math.random() * (max - min)) + min;
     },
+    setNumbers() {
+      this.number1 = this.getRandomInt();
+      this.number2 = this.getRandomInt();
+      if (this.number1 < this.number2) {
+        let tmp = this.number1;
+        this.number1 = this.number2;
+        this.number2 = tmp;
+      }
+    },
     startGame() {
       if (this.play == false) {
         this.play = true;
         this.points = 0;
-        this.number1 = this.getRandomInt();
-        this.number2 = this.getRandomInt();
+        this.setNumbers();
         setTimeout(() => {
           let doc = document.getElementById("game-input");
           if (doc) {
@@ -156,8 +160,7 @@ export default {
     },
     stopGame() {
       this.inputValue = "";
-      this.number1 = this.getRandomInt();
-      this.number2 = this.getRandomInt();
+      this.setNumbers();
       this.play = false;
       clearInterval(this.gameLoopInterval);
       this.timer = 30;
