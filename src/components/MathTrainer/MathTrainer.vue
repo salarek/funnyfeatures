@@ -3,6 +3,7 @@
     <div class="gif-show">
       <img
         v-if="showGif"
+        class="gif-item"
         style="width: 45%; height: 45%"
         :src="require('./testgif.gif')"
         alt=""
@@ -57,6 +58,7 @@
 
 <script>
 import WelcomeScreen from "../WelcomeScreen/WelcomeScreen.vue";
+// import * as fs from 'fs';
 import { Howl } from "howler";
 export default {
   components: {
@@ -75,6 +77,16 @@ export default {
       number2: 0,
       goodSound: new Howl({
         src: ["good.m4a"],
+        volume: 0.5,
+        html5: true,
+      }),
+      badSound: new Howl({
+        src: ["bad.m4a"],
+        volume: 1,
+        html5: true,
+      }),
+      jingl: new Howl({
+        src: ["jingl.m4a"],
         volume: 0.5,
         html5: true,
       }),
@@ -120,9 +132,14 @@ export default {
             this.points++;
           }
           this.setNumbers();
+          this.showGif = true;
+          this.goodSound.play();
           setTimeout(() => {
             this.inputValue = "";
-          }, 100);
+          }, 300);
+          setTimeout(() => {
+            this.showGif = false;
+          }, 900);
         }
       }
     },
@@ -140,6 +157,8 @@ export default {
     },
   },
   created() {
+    // this.jingl.play();
+
     this.setNumbers();
   },
   methods: {
@@ -190,12 +209,14 @@ export default {
         this.gameLoopInterval = setInterval(() => {
           this.timer--;
           if (this.timer == 0) {
+            this.badSound.play();
             this.stopGame();
           }
         }, 1000);
       }
     },
     setWelcomeStatus(val) {
+      this.jingl.play();
       this.welcomeScreenStatus = val;
     },
 
@@ -219,12 +240,15 @@ export default {
     position: fixed;
     right: 25%;
     top: 16%;
+    .gif-item {
+      filter: drop-shadow(4px 4px 4px #44dd6a);
+    }
   }
   .btn-nav {
     text-align: center;
-    margin: 2%;
+    margin: 1%;
     cursor: pointer;
-    padding: 2%;
+    padding: 1%;
     background: #620694;
     font-size: 1.5rem;
     box-shadow: 4px 4px white;
@@ -234,7 +258,9 @@ export default {
     transform: scale(1.1);
   }
   .navigation {
-    top: 10%;
+    background: #021252;
+    width: 100%;
+    top: 0%;
     position: absolute;
     display: flex;
     justify-content: center;
@@ -254,7 +280,7 @@ export default {
     .game-input {
       color: white;
       border: none;
-      border-bottom: 2px solid white;
+      // border-bottom: 2px solid white;
       text-decoration: none !important;
       outline: none;
       background: transparent;
@@ -288,7 +314,7 @@ export default {
       padding: 2%;
       cursor: pointer;
       background: #27cc0c;
-      font-size: 3.5rem;
+      font-size: 3vw;
       box-shadow: 4px 4px white;
       transition: 1s;
     }
