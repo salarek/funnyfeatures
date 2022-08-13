@@ -1,5 +1,13 @@
 <template>
   <div class="math-trainer" id="math-trainer">
+    <div class="gif-show">
+      <img
+        v-if="showGif"
+        style="width: 45%; height: 45%"
+        :src="require('./testgif.gif')"
+        alt=""
+      />
+    </div>
     <div class="navigation">
       <div class="btn-nav" @click="mode = 'add'">Dodawanie</div>
       <div class="btn-nav" @click="mode = 'odd'">Odejmowanie</div>
@@ -49,12 +57,14 @@
 
 <script>
 import WelcomeScreen from "../WelcomeScreen/WelcomeScreen.vue";
+import { Howl } from "howler";
 export default {
   components: {
     WelcomeScreen,
   },
   data() {
     return {
+      showGif: false,
       play: false,
       mode: "add",
       timer: 30,
@@ -63,7 +73,11 @@ export default {
       level: 10,
       number1: 0,
       number2: 0,
-
+      goodSound: new Howl({
+        src: ["good.m4a"],
+        volume: 0.5,
+        html5: true,
+      }),
       welcomeScreenStatus: false,
       gameStatusText: "Naucz sie dodawać i odejmować w końcu",
     };
@@ -73,7 +87,7 @@ export default {
       if (newVal == true) {
         let doc = document.getElementById("math-trainer");
         if (doc) {
-          doc.style.background = "#0c059c";
+          doc.style.background = "#021252";
         }
       }
       if (newVal == false) {
@@ -90,9 +104,14 @@ export default {
             this.points++;
           }
           this.setNumbers();
+          this.showGif = true;
+          this.goodSound.play();
           setTimeout(() => {
             this.inputValue = "";
-          }, 100);
+          }, 300);
+          setTimeout(() => {
+            this.showGif = false;
+          }, 900);
         }
       }
       if (this.mode == "odd") {
@@ -196,6 +215,11 @@ export default {
   justify-content: center;
   align-items: center;
   transition: 1s;
+  .gif-show {
+    position: fixed;
+    right: 25%;
+    top: 16%;
+  }
   .btn-nav {
     text-align: center;
     margin: 2%;
