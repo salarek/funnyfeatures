@@ -139,16 +139,20 @@ export default {
       return Math.floor(Math.random() * (max - min)) + min;
     },
     startGame() {
-      this.play = true;
-      this.points = 0;
-      setTimeout(() => {
-        let doc = document.getElementById("game-input");
-        if (doc) {
-          doc.focus();
-        }
-      }, 100);
+      if (this.play == false) {
+        this.play = true;
+        this.points = 0;
+        this.number1 = this.getRandomInt();
+        this.number2 = this.getRandomInt();
+        setTimeout(() => {
+          let doc = document.getElementById("game-input");
+          if (doc) {
+            doc.focus();
+          }
+        }, 100);
 
-      this.gameLoop();
+        this.gameLoop();
+      }
     },
     stopGame() {
       this.inputValue = "";
