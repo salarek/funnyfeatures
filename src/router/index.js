@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import PsDrag from "../components/PsDrag/PsDrag.vue";
 import Phisic from "../components/Phisic/Phisic.vue";
 import SpeedSimulator from "../components/SpeedSimulator/SpeedSimulator.vue";
+import MathTrainer from "../components/MathTrainer/MathTrainer.vue";
 
 Vue.use(VueRouter);
 
@@ -27,6 +28,11 @@ const routes = [
     path: "/speedsimulator",
     name: "speedsimulator",
     component: SpeedSimulator,
+  },
+  {
+    path: "/mathtrainer",
+    name: "mathtrainer",
+    component: MathTrainer,
   },
   {
     path: "/about",

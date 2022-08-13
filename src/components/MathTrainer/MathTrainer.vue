@@ -1,0 +1,269 @@
+<template>
+  <div class="math-trainer" id="math-trainer">
+    <div class="navigation">
+      <div class="btn-nav" @click="mode = 'add'">Dodawanie</div>
+      <div class="btn-nav" @click="mode = 'odd'">Odejmowanie</div>
+      <div style="background: #27cc0c" class="btn-nav" @click="setLevel(10)">
+        Łatwy
+      </div>
+      <div style="background: #cdd406" class="btn-nav" @click="setLevel(100)">
+        Średni
+      </div>
+      <div style="background: #d1220f" class="btn-nav" @click="setLevel(1000)">
+        Trudny
+      </div>
+    </div>
+    <!-- <div class="navigation">
+      <div class="btn-nav">Zacznij</div>
+    </div> -->
+    <div class="game">
+      <div class="equation">{{ number1 }}{{ getMode }}{{ number2 }}=</div>
+      <input
+        id="game-input"
+        :disabled="!play"
+        v-model="inputValue"
+        spellcheck="false"
+        autocomplete="off"
+        maxlength="4"
+        class="game-input"
+        type="text"
+      />
+    </div>
+    <div class="game-buttons">
+      <div class="btn-game" @click="startGame">Start</div>
+      <div style="background: #d1220f" class="btn-game" @click="stopGame">
+        Stop
+      </div>
+    </div>
+    <div class="second-navigation">
+      <div class="info">Czas: {{ timer }}</div>
+      <div class="info">Punkty: {{ points }}</div>
+    </div>
+    <welcome-screen
+      :welcomeScreenStatus="welcomeScreenStatus"
+      @setWelcomeStatus="setWelcomeStatus"
+      :gameStatusText="gameStatusText"
+    ></welcome-screen>
+  </div>
+</template>
+
+<script>
+import WelcomeScreen from "../WelcomeScreen/WelcomeScreen.vue";
+export default {
+  components: {
+    WelcomeScreen,
+  },
+  data() {
+    return {
+      play: false,
+      mode: "add",
+      timer: 30,
+      points: 0,
+      inputValue: "",
+      level: 10,
+      number1: 0,
+      number2: 0,
+
+      welcomeScreenStatus: false,
+      gameStatusText: "Naucz sie dodawać i odejmować w końcu",
+    };
+  },
+  watch: {
+    play(newVal) {
+      if (newVal == true) {
+        let doc = document.getElementById("math-trainer");
+        if (doc) {
+          doc.style.background = "#0c059c";
+        }
+      }
+      if (newVal == false) {
+        let doc = document.getElementById("math-trainer");
+        if (doc) {
+          doc.style.background = "blue";
+        }
+      }
+    },
+    inputValue(newVal) {
+      if (this.mode == "add") {
+        if (newVal == this.number1 + this.number2) {
+          if (this.play == true) {
+            this.points++;
+          }
+          (this.number1 = this.getRandomInt()),
+            (this.number2 = this.getRandomInt()),
+            setTimeout(() => {
+              this.inputValue = "";
+            }, 100);
+        }
+      }
+      if (this.mode == "odd") {
+        if (newVal == this.number1 - this.number2) {
+          if (this.play == true) {
+            this.points++;
+          }
+          (this.number1 = this.getRandomInt()),
+            (this.number2 = this.getRandomInt()),
+            setTimeout(() => {
+              this.inputValue = "";
+            }, 100);
+        }
+      }
+    },
+  },
+  computed: {
+    getMode() {
+      switch (this.mode) {
+        case "add":
+          return "+";
+        case "odd":
+          return "-";
+        default:
+          return "+";
+      }
+    },
+  },
+  created() {
+    this.number1 = this.getRandomInt();
+    this.number2 = this.getRandomInt();
+  },
+  methods: {
+    setLevel(val) {
+      this.level = val;
+      this.number1 = this.getRandomInt();
+      this.number2 = this.getRandomInt();
+    },
+    getRandomInt() {
+      console.log("LEVEL", this.level);
+      let min = Math.ceil(1);
+      let max = Math.floor(this.level);
+      return Math.floor(Math.random() * (max - min)) + min;
+    },
+    startGame() {
+      this.play = true;
+      this.points = 0;
+      setTimeout(() => {
+        let doc = document.getElementById("game-input");
+        if (doc) {
+          doc.focus();
+        }
+      }, 100);
+
+      this.gameLoop();
+    },
+    stopGame() {
+      this.inputValue = "";
+      this.number1 = this.getRandomInt();
+      this.number2 = this.getRandomInt();
+      this.play = false;
+      clearInterval(this.gameLoopInterval);
+      this.timer = 30;
+    },
+
+    gameLoop() {
+      if (this.play) {
+        this.gameLoopInterval = setInterval(() => {
+          this.timer--;
+          if (this.timer == 0) {
+            this.stopGame();
+          }
+        }, 1000);
+      }
+    },
+    setWelcomeStatus(val) {
+      this.welcomeScreenStatus = val;
+    },
+
+    resetGame() {},
+  },
+};
+</script>
+<style lang="scss" scoped>
+.math-trainer {
+  color: white;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: blue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 1s;
+  .btn-nav {
+    text-align: center;
+    margin: 2%;
+    cursor: pointer;
+    padding: 2%;
+    background: #620694;
+    font-size: 1.5rem;
+    box-shadow: 4px 4px white;
+    transition: 1s;
+  }
+  .btn-nav:hover {
+    transform: scale(1.1);
+  }
+  .navigation {
+    top: 10%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+  }
+  .game {
+    position: absolute;
+    left: 5%;
+    width: 78%;
+    display: flex;
+
+    .equation {
+      display: flex;
+      justify-content: center;
+      width: 70%;
+      font-size: 10.6rem;
+    }
+    .game-input {
+      color: white;
+      border: none;
+      border-bottom: 2px solid white;
+      text-decoration: none !important;
+      outline: none;
+      background: transparent;
+      font-family: "Galindo", sans-serif;
+      margin-left: 3%;
+      width: 39%;
+      font-size: 10.6rem;
+    }
+  }
+  .second-navigation {
+    position: absolute;
+    width: 50%;
+    bottom: 4%;
+    display: flex;
+    justify-content: center;
+
+    .info {
+      width: 40%;
+      margin: 10%;
+      font-size: 3rem;
+    }
+  }
+  .game-buttons {
+    position: absolute;
+    width: 15%;
+    right: 1%;
+    margin: 1%;
+    .btn-game {
+      text-align: center;
+      margin: 10%;
+      padding: 2%;
+      cursor: pointer;
+      background: #27cc0c;
+      font-size: 3.5rem;
+      box-shadow: 4px 4px white;
+      transition: 1s;
+    }
+    .btn-game:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+</style>
