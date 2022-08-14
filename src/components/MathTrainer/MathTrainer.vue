@@ -77,7 +77,7 @@ export default {
       number2: 0,
       goodSound: new Howl({
         src: ["good.m4a"],
-        volume: 0.5,
+        volume: 0.2,
         html5: true,
       }),
       badSound: new Howl({
