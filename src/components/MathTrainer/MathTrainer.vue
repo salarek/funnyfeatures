@@ -10,6 +10,9 @@
       />
     </div>
     <div class="navigation">
+      <div class="btn-nav" @click="memoryMode = !memoryMode">
+        Tryb pamięciowy
+      </div>
       <div class="btn-nav" @click="mode = 'add'">Dodawanie</div>
       <div class="btn-nav" @click="mode = 'odd'">Odejmowanie</div>
       <div style="background: #27cc0c" class="btn-nav" @click="setLevel(10)">
@@ -26,7 +29,9 @@
       <div class="btn-nav">Zacznij</div>
     </div> -->
     <div class="game">
-      <div class="equation">{{ number1 }}{{ getMode }}{{ number2 }}=</div>
+      <div id="equation" class="equation">
+        {{ number1 }}{{ getMode }}{{ number2 }}=
+      </div>
       <input
         id="game-input"
         :disabled="!play"
@@ -69,8 +74,9 @@ export default {
       showGif: false,
       play: false,
       mode: "add",
-      timer: 30,
+      timer: 60,
       points: 0,
+      memoryMode: false,
       inputValue: "",
       level: 10,
       number1: 0,
@@ -173,12 +179,20 @@ export default {
       return Math.floor(Math.random() * (max - min)) + min;
     },
     setNumbers() {
+      let doc = document.getElementById("equation");
+      doc.style.opacity = 1;
       this.number1 = this.getRandomInt();
       this.number2 = this.getRandomInt();
+
       if (this.number1 < this.number2) {
         let tmp = this.number1;
         this.number1 = this.number2;
         this.number2 = tmp;
+      }
+      if (this.memoryMode) {
+        setTimeout(() => {
+          doc.style.opacity = 0;
+        }, 1000);
       }
     },
     startGame() {
