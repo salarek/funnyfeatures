@@ -29,7 +29,7 @@
       <div class="btn-nav">Zacznij</div>
     </div> -->
     <div class="game">
-      <div id="equation" class="equation">
+      <div @click="showEquation()" id="equation" class="equation">
         {{ number1 }}{{ getMode }}{{ number2 }}=
       </div>
       <input
@@ -74,7 +74,7 @@ export default {
       showGif: false,
       play: false,
       mode: "add",
-      timer: 60,
+      timer: 560,
       points: 0,
       memoryMode: false,
       inputValue: "",
@@ -168,6 +168,14 @@ export default {
     this.setNumbers();
   },
   methods: {
+    showEquation() {
+      let doc = document.getElementById("equation");
+      if (doc.style.opacity == 0) {
+        doc.style.opacity = 1;
+      } else {
+        doc.style.opacity = 0;
+      }
+    },
     setLevel(val) {
       this.level = val;
       this.setNumbers();
@@ -215,7 +223,7 @@ export default {
       this.setNumbers();
       this.play = false;
       clearInterval(this.gameLoopInterval);
-      this.timer = 30;
+      this.timer = 560;
     },
 
     gameLoop() {
@@ -286,6 +294,7 @@ export default {
     display: flex;
 
     .equation {
+      user-select: none;
       display: flex;
       justify-content: center;
       width: 70%;
